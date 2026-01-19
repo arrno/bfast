@@ -6,7 +6,7 @@
 
 ## Installation
 
--   Homebrew (macOS/Linux): `brew install arrno/tap/bfast`
+-   Homebrew (macOS/Linux): `brew install --cask arrno/tap/bfast`
 -   Scoop (Windows):
     1. `scoop bucket add arrno https://github.com/arrno/scoop`
     2. `scoop install bfast`
@@ -52,7 +52,7 @@ goreleaser release --clean    # publish tagged release artifacts, brew + scoop m
 goreleaser release --snapshot --skip=publish --clean   # dry run locally
 ```
 
-bew and scoop distributed through `arrno/homebrew-tap` and `arrno/scoop` respectively.
+brew and scoop metadata are updated automatically via `arrno/homebrew-tap` (casks) and `arrno/scoop` (bucket) when GoReleaser runs.
 
 For day-to-day development:
 

@@ -1,82 +1,80 @@
+version: 2
+
 project_name: bfast
 
 before:
-  hooks:
-    - go test ./...
+    hooks:
+        - go test ./...
 
 builds:
-  - id: bfast
-    main: ./cmd/bfast
-    binary: bfast
-    env:
-      - CGO_ENABLED=0
-    goos:
-      - darwin
-      - linux
-      - windows
-    goarch:
-      - amd64
-      - arm64
-    ignore:
-      - goos: windows
-        goarch: arm64
-    ldflags:
-      - -s -w
+    - id: bfast
+      main: ./cmd/bfast
+      binary: bfast
+      env:
+          - CGO_ENABLED=0
+      goos:
+          - darwin
+          - linux
+          - windows
+      goarch:
+          - amd64
+          - arm64
+      ignore:
+          - goos: windows
+            goarch: arm64
+      ldflags:
+          - -s -w
 
 archives:
-  - id: default
-    builds:
-      - bfast
-    format: tar.gz
-    wrap_in_directory: false
-    name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
-    format_overrides:
-      - goos: windows
-        format: zip
+    - id: default
+      formats:
+          - tar.gz
+      wrap_in_directory: false
+      name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+      format_overrides:
+          - goos: windows
+            formats:
+                - zip
 
 checksum:
-  name_template: '{{ .ProjectName }}_checksums.txt'
-  algorithm: sha256
+    name_template: "{{ .ProjectName }}_checksums.txt"
+    algorithm: sha256
 
 dockers: []
 
 release:
-  draft: false
-  replace_existing_draft: true
-  name_template: '{{.Tag}}'
+    draft: false
+    replace_existing_draft: true
+    name_template: "{{.Tag}}"
 
 changelog:
-  sort: asc
-  filters:
-    exclude:
-      - '^docs:'
-      - '^chore:'
+    sort: asc
+    filters:
+        exclude:
+            - "^docs:"
+            - "^chore:"
 
-brews:
-  - name: bfast
-    tap:
-      owner: arrno
-      name: homebrew-tap
-    folder: Formula
-    homepage: https://blazingly.fast
-    description: 'CLI badger for registering repos with blazingly.fast and inserting the badge'
-    commit_author:
-      name: blazingly bot
-      email: releases@blazingly.fast
-    test: |
-      system "#{bin}/bfast", "--help"
-    install: |
-      bin.install "bfast"
-    dependencies: []
+homebrew_casks:
+    - name: bfast
+      repository:
+          owner: arrno
+          name: homebrew-tap
+      directory: Casks
+      homepage: https://blazingly.fast
+      description: "CLI badger for registering repos with blazingly.fast and inserting the badge"
+      binaries:
+          - bfast
+      commit_author:
+          name: blazingly bot
+          email: releases@blazingly.fast
 
 scoops:
-  - name: bfast
-    bucket:
-      owner: arrno
-      name: scoop
-    homepage: https://blazingly.fast
-    description: 'CLI badger for registering repos with blazingly.fast and inserting the badge'
-    commit_author:
-      name: blazingly bot
-      email: releases@blazingly.fast
-    checkver: false
+    - name: bfast
+      repository:
+          owner: arrno
+          name: scoop
+      homepage: https://blazingly.fast
+      description: "CLI badger for registering repos with blazingly.fast and inserting the badge"
+      commit_author:
+          name: blazingly bot
+          email: releases@blazingly.fast

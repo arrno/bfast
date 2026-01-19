@@ -253,10 +253,11 @@ git push --tags
 #### Homebrew (macOS + Linux)
 
 - Official tap repo: `arrno/homebrew-tap` (tapped as `arrno/tap`)
+- Distributed as a cask managed by GoReleaser
 - Install:
 
 ```bash
-brew install arrno/tap/bfast
+brew install --cask arrno/tap/bfast
 ```
 
 #### Scoop (Windows)
