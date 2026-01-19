@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/arrno/bfast/actions/workflows/ci.yml/badge.svg)](https://github.com/arrno/bfast/actions/workflows/ci.yml)
 
-`bfast` (the Blazingly Fast Badger) registers your repository with [blazingly.fast](https://blazingly.fast) and drops the official badge into your README.
+`bfast` (the Blazingly Fast CLI tool) registers your repository with [blazingly.fast](https://blazingly.fast) and drops the official badge into your README.
 
 ## Installation
 
@@ -22,7 +22,7 @@ Run `bfast` from your project directory and it will:
 4. Append the badge snippet following the existing badge block or heading
 
 ```bash
-bfast            # auto-detect repo and README
+bfast                           # auto-detect repo and README
 bfast -m "Fast enough for me"   # custom blurb
 bfast --repo owner/repo         # override detection
 ```
@@ -52,7 +52,7 @@ goreleaser release --clean    # publish tagged release artifacts, brew + scoop m
 goreleaser release --snapshot --skip=publish --clean   # dry run locally
 ```
 
-Ensure the `arrno/homebrew-tap` and `arrno/scoop` repositories exist and accept pushes from the release bot configured in the GoReleaser file.
+bew and scoop distributed through `arrno/homebrew-tap` and `arrno/scoop` respectively.
 
 For day-to-day development:
 
