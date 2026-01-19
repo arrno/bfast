@@ -64,6 +64,12 @@ homebrew_casks:
       description: "CLI badger for registering repos with blazingly.fast and inserting the badge"
       binaries:
           - bfast
+      hooks:
+          post:
+              install: |
+                  if OS.mac?
+                      system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/bfast"]
+                  end
       commit_author:
           name: blazingly bot
           email: releases@blazingly.fast
