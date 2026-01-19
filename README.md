@@ -1,5 +1,7 @@
 # bfast
 
+[![CI](https://github.com/arrno/bfast/actions/workflows/ci.yml/badge.svg)](https://github.com/arrno/bfast/actions/workflows/ci.yml)
+
 `bfast` (the Blazingly Fast Badger) registers your repository with [blazingly.fast](https://blazingly.fast) and drops the official badge into your README.
 
 ## Installation

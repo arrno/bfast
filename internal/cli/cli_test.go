@@ -78,3 +78,15 @@ func TestExecuteDryRunWithOverrides(t *testing.T) {
 		t.Fatalf("expected blurb to be preserved")
 	}
 }
+
+func TestEmitResultPrefersAlreadyBadgedMessage(t *testing.T) {
+	buf := &bytes.Buffer{}
+	res := &result{AlreadyBadged: true, DryRun: true}
+	emitResult(res, false, buf)
+
+	got := buf.String()
+	want := "Already badged. No changes.\n"
+	if got != want {
+		t.Fatalf("emitResult output = %q, want %q", got, want)
+	}
+}

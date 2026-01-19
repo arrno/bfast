@@ -61,6 +61,7 @@ func InsertBadge(content, badge string) (string, error) {
 		return "", errors.New("badge content may not be empty")
 	}
 
+	newline := detectNewline(content)
 	normalized := strings.ReplaceAll(content, "\r\n", "\n")
 	lines := strings.Split(normalized, "\n")
 
@@ -91,7 +92,18 @@ func InsertBadge(content, badge string) (string, error) {
 		output += "\n"
 	}
 
+	if newline == "\r\n" {
+		output = strings.ReplaceAll(output, "\n", "\r\n")
+	}
+
 	return output, nil
+}
+
+func detectNewline(content string) string {
+	if strings.Contains(content, "\r\n") {
+		return "\r\n"
+	}
+	return "\n"
 }
 
 func findBadgeBlock(lines []string) (int, int, bool) {

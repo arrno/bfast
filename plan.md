@@ -214,7 +214,7 @@ Constraints:
 
 ### Canonical source: GitHub Releases
 
-- `github.com/blazingly-fast/bfast`
+- `github.com/arrno/bfast`
 - Every release includes:
   - static binaries
   - checksums
@@ -252,20 +252,20 @@ git push --tags
 
 #### Homebrew (macOS + Linux)
 
-- Official tap: `blazingly/tap`
+- Official tap repo: `arrno/homebrew-tap` (tapped as `arrno/tap`)
 - Install:
 
 ```bash
-brew install blazingly/tap/bfast
+brew install arrno/tap/bfast
 ```
 
 #### Scoop (Windows)
 
-- Official bucket: `blazingly`
+- Official bucket: `arrno`
 - Install:
 
 ```powershell
-scoop bucket add blazingly https://github.com/blazingly-fast/scoop
+scoop bucket add arrno https://github.com/arrno/scoop
 scoop install bfast
 ```
 

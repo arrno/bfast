@@ -1,6 +1,9 @@
 package readme
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestHasBadge(t *testing.T) {
 	cases := []struct {
@@ -35,5 +38,24 @@ func TestInsertBadge(t *testing.T) {
 	want := "# Project\n" + badge + "\n\nSome text\n"
 	if updated != want {
 		t.Fatalf("InsertBadge produced unexpected content:\n%s\nwant:\n%s", updated, want)
+	}
+}
+
+func TestInsertBadgePreservesWindowsNewlines(t *testing.T) {
+	content := "# Project\r\n\r\nSome text"
+	badge := "[![blazingly fast](https://blazingly.fast/api/badge.svg?repo=proj)](https://blazingly.fast)"
+
+	updated, err := InsertBadge(content, badge)
+	if err != nil {
+		t.Fatalf("InsertBadge returned error: %v", err)
+	}
+
+	want := "# Project\r\n" + badge + "\r\n\r\nSome text\r\n"
+	if updated != want {
+		t.Fatalf("InsertBadge produced unexpected content:\n%q\nwant:\n%q", updated, want)
+	}
+
+	if strings.Contains(strings.ReplaceAll(updated, "\r\n", ""), "\n") {
+		t.Fatalf("InsertBadge introduced bare LF newlines: %q", updated)
 	}
 }

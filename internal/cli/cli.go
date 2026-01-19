@@ -299,10 +299,10 @@ func emitResult(res *result, jsonOut bool, stdout io.Writer) {
 	}
 
 	switch {
-	case res.DryRun:
-		fmt.Fprintf(stdout, "Dry run: would register %s and update %s\n", res.Repo, res.Readme)
 	case res.AlreadyBadged:
 		fmt.Fprintln(stdout, "Already badged. No changes.")
+	case res.DryRun:
+		fmt.Fprintf(stdout, "Dry run: would register %s and update %s\n", res.Repo, res.Readme)
 	default:
 		printSummary(stdout, res)
 	}
