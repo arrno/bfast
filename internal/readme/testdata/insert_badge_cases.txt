@@ -1,0 +1,70 @@
+=== case: no-existing-badge ===
+--- before ---
+# Project
+
+Some text
+--- after ---
+# Project
+[![blazingly fast](https://blazingly.fast/api/badge.svg?repo=proj)](https://blazingly.fast)
+
+Some text
+=== end ===
+
+=== case: badge-above-heading ===
+--- before ---
+[![ci](ci)](ci)
+
+# Project
+
+Some text
+--- after ---
+[![ci](ci)](ci) [![blazingly fast](https://blazingly.fast/api/badge.svg?repo=proj)](https://blazingly.fast)
+
+# Project
+
+Some text
+=== end ===
+
+=== case: heading-inline-badge ===
+--- before ---
+# Project [![ci](ci)](ci)
+
+Some text
+--- after ---
+# Project [![ci](ci)](ci) [![blazingly fast](https://blazingly.fast/api/badge.svg?repo=proj)](https://blazingly.fast)
+
+Some text
+=== end ===
+
+=== case: single-line-badge-block ===
+--- before ---
+# Project
+
+[![ci](ci)](ci)
+
+Some text
+--- after ---
+# Project
+
+[![ci](ci)](ci) [![blazingly fast](https://blazingly.fast/api/badge.svg?repo=proj)](https://blazingly.fast)
+
+Some text
+=== end ===
+
+=== case: multi-line-badge-block ===
+--- before ---
+# Project
+
+[![ci](ci)](ci)
+[![cov](cov)](cov)
+
+Some text
+--- after ---
+# Project
+
+[![ci](ci)](ci)
+[![cov](cov)](cov)
+[![blazingly fast](https://blazingly.fast/api/badge.svg?repo=proj)](https://blazingly.fast)
+
+Some text
+=== end ===

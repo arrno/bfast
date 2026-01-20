@@ -124,8 +124,8 @@ Before any API call:
 
 1. Locate README
 2. Scan for existing blazingly.fast badge:
-   - contains `https://blazingly.fast/api/badge.svg`
-   - OR alt text includes `blazingly fast` and link to `blazingly.fast`
+   - contains `https://www.blazingly.fast/api/badge.svg`
+   - OR alt text includes `blazingly fast` and link to `www.blazingly.fast`
 
 If found:
 - print: `Already badged. No changes.`
@@ -174,7 +174,7 @@ Randomization prevents Hall-of-Speed sameness.
 ## 7. Badge URL Generation
 
 ```md
-[![blazingly fast](https://blazingly.fast/api/badge.svg?repo=<ENCODED_SLUG>)](https://blazingly.fast)
+[![blazingly fast](https://www.blazingly.fast/api/badge.svg?repo=<ENCODED_SLUG>)](https://www.blazingly.fast)
 ```
 
 Where:
@@ -279,13 +279,13 @@ These two cover the majority of dev users with minimal maintenance.
 Hosted at:
 
 ```
-https://blazingly.fast/install.sh
+https://www.blazingly.fast/install.sh
 ```
 
 Usage:
 
 ```bash
-curl -fsSL https://blazingly.fast/install.sh | sh
+curl -fsSL https://www.blazingly.fast/install.sh | sh
 ```
 
 Behavior:

@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	BadgeImageURL = "https://blazingly.fast/api/badge.svg"
-	BadgeLinkURL  = "https://blazingly.fast"
+	BadgeImageURL = "https://www.blazingly.fast/api/badge.svg"
+	BadgeLinkURL  = "https://www.blazingly.fast"
 )
 
 var ErrNotFound = errors.New("readme not found")
@@ -69,11 +69,29 @@ func InsertBadge(content, badge string) (string, error) {
 		lines = []string{""}
 	}
 
+	titleIdx := findTitle(lines)
+	if titleIdx >= 0 && lineContainsBadge(lines[titleIdx]) {
+		lines[titleIdx] = appendInlineBadge(lines[titleIdx], badge)
+		return formatOutput(lines, newline), nil
+	}
+
 	insertIdx := -1
-	_, blockEnd, ok := findBadgeBlock(lines)
+	blockStart, blockEnd, ok := findBadgeBlock(lines)
+	if !ok && titleIdx >= 0 && titleIdx+1 < len(lines) {
+		if postStart, postEnd, postOK := findBadgeBlock(lines[titleIdx+1:]); postOK {
+			blockStart = postStart + titleIdx + 1
+			blockEnd = postEnd + titleIdx + 1
+			ok = true
+		}
+	}
+
 	if ok {
+		if blockStart == blockEnd {
+			lines[blockEnd] = appendInlineBadge(lines[blockEnd], badge)
+			return formatOutput(lines, newline), nil
+		}
 		insertIdx = blockEnd + 1
-	} else if titleIdx := findTitle(lines); titleIdx >= 0 {
+	} else if titleIdx >= 0 {
 		insertIdx = titleIdx + 1
 		if insertIdx < len(lines) && strings.TrimSpace(lines[insertIdx]) != "" {
 			lines = insertLine(lines, insertIdx, "")
@@ -87,16 +105,7 @@ func InsertBadge(content, badge string) (string, error) {
 		lines = insertLine(lines, insertIdx, badge)
 	}
 
-	output := strings.Join(lines, "\n")
-	if !strings.HasSuffix(output, "\n") {
-		output += "\n"
-	}
-
-	if newline == "\r\n" {
-		output = strings.ReplaceAll(output, "\n", "\r\n")
-	}
-
-	return output, nil
+	return formatOutput(lines, newline), nil
 }
 
 func detectNewline(content string) string {
@@ -164,6 +173,19 @@ func looksLikeBadge(line string) bool {
 	return strings.HasPrefix(line, "![") || strings.HasPrefix(line, "[![")
 }
 
+func lineContainsBadge(line string) bool {
+	return strings.Contains(line, "[![")
+}
+
+func appendInlineBadge(line, badge string) string {
+	trimmed := strings.TrimRight(line, " \t")
+	space := ""
+	if trimmed != "" {
+		space = " "
+	}
+	return trimmed + space + badge
+}
+
 func insertLine(lines []string, idx int, value string) []string {
 	if idx < 0 {
 		idx = 0
@@ -183,4 +205,17 @@ func insertLine(lines []string, idx int, value string) []string {
 // BuildBadgeMarkdown returns the markdown snippet for the badge.
 func BuildBadgeMarkdown(encodedSlug string) string {
 	return fmt.Sprintf("[![blazingly fast](%s?repo=%s)](%s)", BadgeImageURL, encodedSlug, BadgeLinkURL)
+}
+
+func formatOutput(lines []string, newline string) string {
+	output := strings.Join(lines, "\n")
+	if !strings.HasSuffix(output, "\n") {
+		output += "\n"
+	}
+
+	if newline == "\r\n" {
+		output = strings.ReplaceAll(output, "\n", "\r\n")
+	}
+
+	return output
 }
